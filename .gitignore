@@ -1,1 +1,59 @@
 .idea
+# Ignore Python bytecode files
+*.pyc
+*.pyo
+*.pyd
+__pycache__/
+
+# Ignore virtual environment directories
+venv/
+.env/
+
+# Ignore IDE configuration directories
+.idea/
+
+# Ignore PyCharm specific cache and settings
+*.iml
+*.ipr
+*.iws
+*.pydevproject
+*.project
+*.settings/
+*.idea_modules/
+
+# Ignore log files
+*.log
+
+# Ignore environment configuration files
+.env
+.venv
+
+# Ignore coverage reports
+.coverage
+*.cover
+*.coverage.*
+
+# Ignore Mypy and mypy-stubs cache
+.mypy_cache/
+.dmypy.json
+dmypy.json
+
+# Ignore pytest cache
+.pytest_cache/
+
+# Ignore Sphinx documentation
+docs/_build/
+
+# Ignore Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+
+# Ignore various macOS files
+.DS_Store
+
+# Ignore Windows specific files
+Thumbs.db
+Desktop.ini
+
+# Ignore other common files and directories
+*.swp
+*~
