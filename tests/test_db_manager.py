@@ -52,7 +52,6 @@ def test_add_instance_failure(db_manager):
 
         db_manager.add_instance(Car, car_data)
 
-        # Check that session.add() was called
         mock_session.add.assert_called_once()
         # Check that session.rollback() was called after commit failed
         mock_session.rollback.assert_called_once()

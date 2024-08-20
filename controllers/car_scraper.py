@@ -1,4 +1,8 @@
+from unittest.mock import MagicMock, patch
+
 import aiohttp
+import asyncio
+
 from database.db_manager import DatabaseManager, logger
 from models.car import Car
 from utils.config import BASE, PAGES
@@ -69,3 +73,45 @@ class CarScraper:
             else:
                 logger.error(f"Failed to fetch data from {url}. Stopping.")
                 break
+
+
+@patch('controllers.car_scraper.aiohttp.ClientSession.get')
+async def test_fetch(mock_get, mock_car_scraper):
+    mock_response = MagicMock()
+    mock_response.json = asyncio.coroutine(lambda: {'data': {'ads': []}})
+    mock_get.return_value = mock_response
+
+    result = await mock_car_scraper.fetch('https://bama.ir/test-url')
+
+    assert result == {'data': {'ads': []}}
+
+@patch('controllers.car_scraper.aiohttp.ClientSession.get')
+def test_parse_ad(mock_car_scraper):
+    ad = {
+        'detail': {
+            'url': '/test-url',
+            'title': 'Test Car',
+            'time': '2024-08-19',
+            'year': '2020',
+            'mileage': '10000',
+            'location': 'Test Location',
+            'description': 'Test Description',
+            'image': 'https://bama.ir/test-image.jpg',
+            'modified_date': '2024-08-19'
+        }
+    }
+    parsed_data = mock_car_scraper.parse_ad(ad)
+
+    expected_data = {
+        'url': 'https://bama.ir/test-url',
+        'title': 'Test Car',
+        'time': '2024-08-19',
+        'year': '2020',
+        'mileage': '10000',
+        'location': 'Test Location',
+        'description': 'Test Description',
+        'image': 'https://bama.ir/test-image.jpg',
+        'modified_date': '2024-08-19'
+    }
+
+    assert parsed_data == expected_data
